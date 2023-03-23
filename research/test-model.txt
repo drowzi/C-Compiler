@@ -1,0 +1,15 @@
+Token output will be in the form of:
+  "tok1", "tok2", "tokn"
+
+Tree output will be in the form of:
+  tree [
+    0: {
+      ast_funcdef: {
+        name:
+        params: []
+        return_type: {
+
+        }
+      }
+    }
+  ]

@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Static_single_assignment_form
+
+seems like nop padding happens to fit a stack frame into a certain divisor

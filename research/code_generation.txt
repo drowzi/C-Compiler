@@ -1,0 +1,25 @@
+why the fuck does (leal 1(%eax), %edx) mean (edx = eax+1)?
+disp(base, index, scale) -> base + scale * index + disp // This operation can be and is used for arithmetic
+therefore, 1(%eax) == eax + 1
+and, 0(,%eax,4) == 4 * eax + 0
+
+(notes):
+  -function parameters will be in +n(%ebp), locals will be in -n(%ebp)
+  -comparisons including equals will be converted to the opposite comparison, i.e. >= turns into <
+
+function definition:
+	1. Open the frame for GAS debugging, write generic code snippets
+  2. Calculate the local stack size by adding all local variables (including stack array sizes) within the function definition (not including parameters)
+  3. Subtract this number from the stack pointer
+  4. Parse each statement
+  5. Return value in eax
+
+function call:
+  1. Push parameters to the stack, last value(parameter block size) first
+  2. Call function
+  3. Expect return in eax if non void function
+
+
+- which jump statements to use: http://www.unixwiz.net/techtips/x86-jumps.html
+
+- bss section is for global static variables, lcomm is for local static variables

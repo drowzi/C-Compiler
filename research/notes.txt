@@ -1,0 +1,30 @@
+8cc older build - https://github.com/rui314/8cc/tree/5fdb78be05917a511a1df44c5eb25419d8f6e9d3?files=1
+
+//HOW MANY POINTERS?
+The C++ standard "recommends" that an implementation support at least 256 pointer depth. (Readability recommends that you not exceed 2 or 3, and even then: more than one should be exceptional.) 
+
+// STORAGE
+The only storage-class specifier that shall occur in a parameter declaration is register.
+
+// C compiler frontend passes
+1. The input file is read into memory and broken into lines
+2. If trigraphs are enabled, they are replaced by their corresponding single characters
+3. Continued lines (preprocessor continuation aka '/') are merged into one long line
+4. All comments are replaced with single spaces
+5. Next, the input file is converted into a sequence of preprocessing tokens. The preprocessor is greedy and makes leftmost tokens as big as possible, a+++++b -> a ++ ++ + b as opposed to a ++ + ++ b
+6. Tokenization
+7. If there exist any tokens in the preprocessing language, begin preprocessing
+8. Apply preprocessing (nice?)
+9. Parse
+
+// Optimizating code gen
+idea: a method of reducing conditions
+attach a function pointer to a node on creation for generation. this way we can do like "(*node->gen)" instead of "if node->type == blah: gen_node()"
+
+// debug sig handler
+idea: add internal signals for the compiler which output debug info and take an optional function to handle the user's
+own signal handler. 
+
+signal(user_sig)
+	do_internal_debugging();
+	if user_sig: user_sig();

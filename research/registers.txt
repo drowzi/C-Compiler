@@ -1,0 +1,60 @@
+EAX,AX,AH,AL : Called the Accumulator register. 
+               It is used for I/O port access, arithmetic, interrupt calls,
+               etc...
+
+EBX,BX,BH,BL : Called the Base register
+               It is used as a base pointer for memory access
+               Gets some interrupt return values
+
+ECX,CX,CH,CL : Called the Counter register
+               It is used as a loop counter and for shifts
+               Gets some interrupt values
+
+EDX,DX,DH,DL : Called the Data register
+               It is used for I/O port access, arithmetic, some interrupt 
+               calls.
+
+ES:EDI EDI DI : Destination index register
+                Used for string, memory array copying and setting and
+                for far pointer addressing with ES
+
+DS:ESI EDI SI : Source index register
+                Used for string and memory array copying
+
+--- 
+
+EAX
+Specialized operations, such as multiplication, division, sign extension, and BCD correction can only occur in the accumulator.
+
+EDX
+Of the seven remaining general-purpose registers, the data register, EDX, is most closely tied to the accumulator. Instructions that deal with over sized data items, such as multiplication, division, CWD, and CDQ, store the most significant bits in the data register and the least significant bits in the accumulator. In a sense, the data register is the 64-bit extension of the accumulator. The data register also plays a part in IO instructions. In this case, the accumulator holds the data to read or write from the port, and the data register holds the port address.
+In your code, the data register is most useful for storing data related to the accumulator's calculation. In my experience, most calculations need only these two registers for storage if they are written properly.
+
+ECX
+loops
+
+EDI
+global write pointer
+
+ESI
+global read pointer
+
+EBX
+So, of all the general-purpose registers, EBX is the only register without an important dedicated purpose. It is a good place to store an extra pointer or calculation step, but not much more.
+
+---
+
+EAX - All major calculations take place in EAX, making it similar to a dedicated accumulator register.
+EDX - The data register is the an extension to the accumulator. It is most useful for storing data related to the accumulator's current calculation.
+ECX - Like the variable i in high-level languages, the count register is the universal loop counter.
+EDI - Every loop must store its result somewhere, and the destination index points to that place. With a single-byte STOS instruction to write data out of the accumulator, this register makes data operations much more size-efficient.
+ESI - In loops that process data, the source index holds the location of the input data stream. Like the destination index, EDI has a convenient one-byte instruction for loading data out of memory into the accumulator.
+ESP - ESP is the sacred stack pointer. With the important PUSH, POP, CALL, and RET instructions requiring it's value, there is never a good reason to use the stack pointer for anything else.
+EBP - In functions that store parameters or variables on the stack, the base pointer holds the location of the current stack frame. In other situations, however, EBP is a free data-storage register.
+EBX - In 16-bit mode, the base register was useful as a pointer. Now it is completely free for extra storage space.
+
+---
+
+ESI and EDI can be used but their values must be saved and restored before leaving the frame
+
+

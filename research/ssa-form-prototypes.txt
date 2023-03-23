@@ -1,0 +1,70 @@
+--------------
+Assignment storage:
+  --------------
+  Form 1:
+    struct ssa_block {
+        Vector *assignments;
+        struct ssa_block *lchild;
+        struct ssa_block *rchild;
+    };
+    Each block contains a set of assignments stored in a small (16) length vector.
+  --------------
+  Form 2:
+    struct ssa_block {
+        unsigned int assign_count;
+        struct ssa_assign **assignments;
+        struct ssa_block *lchild;
+        struct ssa_block *rchild;
+    };
+    Each block contains a set of assignments stored in a perfectly sized block of memory.
+  --------------
+--------------
+Edge storage
+  --------------
+  Form 1:
+    struct ssa_block {
+        unsigned int outgoing_edges;
+        struct ssa_block **edges;
+    };
+    Store edges?
+  --------------
+--------------
+AST interactivity
+  --------------
+  struct ssa_X {
+    Node *nod;
+
+  };
+  Should we let graph nodes have internal linkage to their tree node ancestor? This would allow us to prune the tree to optimize
+  prune_prototype(node n) {
+    link n's children to n's parent
+    free n
+  }
+
+------------
+SSA Algorithm take one (naive approach):
+
+ast_to_ssa(ast *tree) {
+  ssa_block *ssa;
+  ssa_block *head = ssa;
+  type = get_ast_type(tree[0])
+  switch(type) {
+    case assign: {
+      tree_map(ssa_assign(&ssa)); // Traverse the tree nodes and apply assign to each one
+    }
+    case branch: {
+      ssa->edges[outgoing_edges++] = new_ssa();
+      ssa_branch(ssa->edges[outgoing_edges]);
+    }
+  }
+  return head;
+}
+
+ssa_assign(ssa_block *ssa, ast *tree) {
+  ssa_assignment *assign;
+  s = get_symbol;
+  l = get_lhs;
+  r = get_rhs;
+  unsigned int tmp_no++;
+
+}

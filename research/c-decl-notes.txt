@@ -1,0 +1,46 @@
+*		as "pointer to"		- always on the left side
+[] 	as "array of"			- always on the right side
+()		as "function returning"		- always on the right side
+
+1.
+find the identifier
+2.
+look at the symbols to the right of the identifier
+if (): identifier is a function returning...
+if []: identifier is a array of...
+continue right until you run out of symbols or hit a right parenthesis
+3.
+look at the symbols left of the identifier.
+if it is not one of our above symbols, say it
+otherwise translate it with above steps
+Keep going left until you run out of symbols or hit a left parenthesis
+4.
+repeat steps 2 and 3 until youve formed your declaration
+
+practice:
+int *(*func())();
+func is a function returning a pointer to a function returning a pointer to int
+
+int (*(*fun_one)(char *,double))[9][20];
+fun_one is a pointer to function (expecting char pointer and double) returning a pointer to array (size 9) of array (size 20) of int
+
+char *(*(**foo[][8])())[];
+foo is an array of array (size 8) pointers to pointer to function returning pointer to array of pointers to char
+
+algorithm prototypes:
+How would the output of 'func is a function returning a pointer to a function returning a pointer to int' look?
+Type{type=int, ptr->Type{type=int, ptr->}
+Type{type=ptr,
+     ptr-> Type{
+      type=ptr,
+      ptr-> Type{
+        type=ptr,
+        ptr-> Type{
+          type=int
+        }
+      }
+     }
+
+1. Pass one: translate tokens into integers, fill stack array with integers, find endpoint, identifier point, decl length
+
+parse until you find an identifier, go right, if its a '('

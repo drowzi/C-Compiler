@@ -1,0 +1,283 @@
+# depslib dependency file v1.0
+1505003951 source:c:\users\allen\desktop\programming\language design\ccompiler\hashtable.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1518220044 c:\users\allen\desktop\programming\language design\ccompiler\cc.h
+	<stdio.h>
+	"adlib.h"
+	"translation_limits.h"
+
+1520856792 source:c:\users\allen\desktop\programming\language design\ccompiler\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<sys/timeb.h>
+	"cc.h"
+
+1505922149 source:c:\users\allen\desktop\programming\language design\ccompiler\vector.c
+	<stdio.h>
+	<stdlib.h>
+	<assert.h>
+	<string.h>
+	"cc.h"
+
+1517101005 source:c:\users\allen\desktop\programming\language design\ccompiler\error.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1518228113 source:c:\users\allen\desktop\programming\language design\ccompiler\file.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1520856366 source:c:\users\allen\desktop\programming\language design\ccompiler\scan.c
+	<assert.h>
+	<string.h>
+	"cc.h"
+
+1514308011 source:c:\users\allen\desktop\programming\language design\ccompiler\buf.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"cc.h"
+
+1520858589 source:c:\users\allen\desktop\programming\language design\ccompiler\gen.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdarg.h>
+	<assert.h>
+	"cc.h"
+
+1517881255 source:c:\users\allen\desktop\programming\language design\ccompiler\debug.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1518743499 source:c:\users\allen\desktop\programming\language design\ccompiler\parse.c
+	<stdio.h>
+	<stdlib.h>
+	<assert.h>
+	"cc.h"
+	"tokenshortcuts.inc"
+
+1505924599 source:c:\users\allen\desktop\programming\language design\ccompiler\map.c
+	<stdlib.h>
+	<string.h>
+	<stdint.h>
+	"cc.h"
+
+1506454151 source:c:\users\allen\desktop\programming\language design\ccompiler\queue.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1506453870 source:c:\users\allen\desktop\programming\language design\ccompiler\stack.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1518228115 source:c:\users\allen\desktop\programming\language design\ccompiler\preprocessor.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	"cc.h"
+
+1517815943 c:\users\allen\desktop\programming\language design\ccompiler\adlib.h
+	<windows.h>
+
+1518228106 source:c:\users\allen\desktop\programming\language design\ccompiler\types.c
+	<stdio.h>
+	<stdlib.h>
+	<assert.h>
+	"cc.h"
+
+1514867196 source:c:\users\allen\desktop\programming\language design\ccompiler\cctestsuite.c
+	<stdio.h>
+	<stdlib.h>
+	<assert.h>
+	"cc.h"
+
+1516231295 source:c:\users\allen\desktop\programming\language design\ccompiler\ssa.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1515464227 source:c:\users\allen\desktop\programming\language design\ccompiler\cdecl.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1516074875 c:\users\allen\desktop\programming\language design\ccompiler\tokenshortcuts.inc
+
+1518228113 source:c:\users\allen\desktop\programming\language design\ccompiler\symbols.c
+	<stdio.h>
+	<stdlib.h>
+	<assert.h>
+	"cc.h"
+
+1516325104 source:c:\users\allen\desktop\programming\language design\ccompiler\module.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1516567807 source:c:\users\allen\desktop\programming\language design\ccompiler\thread.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1517000971 source:c:\users\allen\desktop\programming\language design\ccompiler\operator.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1516759117 c:\users\allen\desktop\programming\language design\ccompiler\translation_limits.h
+
+1517617890 source:c:\users\allen\desktop\programming\language design\ccompiler\regalloc.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1517004134 c:\users\allen\desktop\programming\language design\ccompiler\poison.h
+
+1517027422 source:c:\users\allen\desktop\programming\language design\ccompiler\poison.c
+	<stdio.h>
+	<stdlib.h>
+	<dlfcn.h>
+	"cc.h"
+
+1519247715 source:c:\users\allen\desktop\programming\language design\ccompiler\cfg.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1514863596 source:c:\users\allen\desktop\dev\language design\ccompiler\cctestsuite.c
+	<stdio.h>
+	<stdlib.h>
+	<assert.h>
+	"cc.h"
+
+1518216444 c:\users\allen\desktop\dev\language design\ccompiler\cc.h
+	<stdio.h>
+	"adlib.h"
+	"translation_limits.h"
+
+1517812343 c:\users\allen\desktop\dev\language design\ccompiler\adlib.h
+	<windows.h>
+
+1516755517 c:\users\allen\desktop\dev\language design\ccompiler\translation_limits.h
+
+1515460627 source:c:\users\allen\desktop\dev\language design\ccompiler\cdecl.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1519244115 source:c:\users\allen\desktop\dev\language design\ccompiler\cfg.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1517877655 source:c:\users\allen\desktop\dev\language design\ccompiler\debug.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1517097405 source:c:\users\allen\desktop\dev\language design\ccompiler\error.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1518224513 source:c:\users\allen\desktop\dev\language design\ccompiler\file.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1520855052 source:c:\users\allen\desktop\dev\language design\ccompiler\gen.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdarg.h>
+	<assert.h>
+	"cc.h"
+
+1523731144 source:c:\users\allen\desktop\dev\language design\ccompiler\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<sys/timeb.h>
+	"cc.h"
+
+1505920999 source:c:\users\allen\desktop\dev\language design\ccompiler\map.c
+	<stdlib.h>
+	<string.h>
+	<stdint.h>
+	"cc.h"
+
+1516321504 source:c:\users\allen\desktop\dev\language design\ccompiler\module.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1516997371 source:c:\users\allen\desktop\dev\language design\ccompiler\operator.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1518739899 source:c:\users\allen\desktop\dev\language design\ccompiler\parse.c
+	<stdio.h>
+	<stdlib.h>
+	<assert.h>
+	"cc.h"
+	"tokenshortcuts.inc"
+
+1516071275 c:\users\allen\desktop\dev\language design\ccompiler\tokenshortcuts.inc
+
+1517023822 source:c:\users\allen\desktop\dev\language design\ccompiler\poison.c
+	<stdio.h>
+	<stdlib.h>
+	<dlfcn.h>
+	"cc.h"
+
+1518224515 source:c:\users\allen\desktop\dev\language design\ccompiler\preprocessor.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	"cc.h"
+
+1517614290 source:c:\users\allen\desktop\dev\language design\ccompiler\regalloc.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1520852766 source:c:\users\allen\desktop\dev\language design\ccompiler\scan.c
+	<assert.h>
+	<string.h>
+	"cc.h"
+
+1516227695 source:c:\users\allen\desktop\dev\language design\ccompiler\ssa.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1518224513 source:c:\users\allen\desktop\dev\language design\ccompiler\symbols.c
+	<stdio.h>
+	<stdlib.h>
+	<assert.h>
+	"cc.h"
+
+1516564207 source:c:\users\allen\desktop\dev\language design\ccompiler\thread.c
+	<stdio.h>
+	<stdlib.h>
+	"cc.h"
+
+1518224506 source:c:\users\allen\desktop\dev\language design\ccompiler\types.c
+	<stdio.h>
+	<stdlib.h>
+	<assert.h>
+	"cc.h"
+

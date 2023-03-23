@@ -1,0 +1,227 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "cc.h"
+
+#define DEBUG printf("Program got here.\n")
+
+static Filerecord currentfile;
+
+// Usage: add_token(my_token_array, make_token(KIND_IDENT, "foo"));
+
+Token *make_token(int type, char *value) {
+    //printf("make_token parameter 'value':%s\n", value);
+    Token *t = malloc(sizeof(Token));
+    t->type = type;
+    //t->value = malloc(sizeof(char *) * strlen(value));
+    t->value = value;
+    //printf("token type given is %d, token value given is %s\n", t->type, t->value);
+    return t;
+}
+
+TokenArray *make_token_array(int maxlen) {
+    TokenArray *ta = malloc(sizeof(TokenArray));
+    ta->size = 0;
+    ta->maxsize = maxlen;
+    ta->list = malloc(sizeof(Token) * maxlen);
+    return ta;
+}
+
+void add_token(TokenArray *ta, Token *t) {
+    //printf("%d, %d\n", ta->size, ta->maxsize);
+    if (ta->size + 1 > ta->maxsize) error("TokenArray overflow");
+    ta->list[ta->size++] = t;
+}
+
+int get_last_token_type(TokenArray *ta) {
+    if (ta->size == 0) error("cant get_last_token_type for array of size 0");
+    return ta->list[ta->size-1]->type;
+}
+
+TokenArray *do_lex(Filerecord *input) {
+    currentfile = *input;
+    Buf *strbuf = buffer_open();
+    TokenArray *tokens = make_token_array(1028);
+    while (1) {
+        get_next_token(tokens, strbuf, input);
+        //printf("Last token value: %s\n", tokens->list[tokens->size-1]->value);
+        if (get_last_token_type(tokens) == TEOF) break;
+        buffer_clear(strbuf);
+    }
+    buffer_close(strbuf);
+    return tokens;
+}
+
+TokenArray *do_lex_string(char *s) {
+    Filerecord *input = open_string(s);
+    Buf *strbuf = buffer_open();
+    TokenArray *tokens = make_token_array(1028);
+    while (1) {
+        get_next_token(tokens, strbuf, input);
+        if (input->pos + 1 == strlen(input->str)) break;
+        //printf("Last token value: %s\n", tokens->list[tokens->size-1]->value);
+        buffer_clear(strbuf);
+    }
+    //printf("First value of token before leaving do_lex_str: '%d'\n", tokens->list[0]->value);
+    buffer_close(strbuf);
+    return tokens;
+}
+
+void get_next_token(TokenArray *tokens, Buf *strbuf, Filerecord *input) {
+    char c = fr_getc(input);
+    buffer_append(strbuf, c);
+    char p = peek(input);
+    switch(c) {
+        // Space & EOF detection
+        case '\t':
+        case ' ':  add_token(tokens, make_token(TSPACE, "space/tab")); return;
+        case '\n': add_token(tokens, make_token(TNEWLINE, "newline")); return;
+        case EOF:  add_token(tokens, make_token(TEOF, "eof")); return;
+
+        case '(':
+        case ')':
+        case ',':
+        case ';':
+        case '[':
+        case ']':
+        case '{':
+        case '}':
+        case '?':
+        case ':':
+        case '~':
+            fr_getc(input);
+            add_token(tokens, make_token(TSYMBOL, buffer_get(strbuf)));
+            return;
+
+        case '#': return; // Preprocessing entrypoint
+
+        case 'L':
+            if (p == '\'' || p == '\"') {
+                return; // wchar_t
+            }
+            break; // else break
+
+        case '\'':
+            return; // char entrypoint
+
+        case '\"':
+            return; // string entrypoint
+
+        // Symbol detection
+		case '/': // Single/multi-line comments entrypoint
+		    //DEBUG;
+			if (p == '/') {
+				c=fr_getc(input);
+				while (c != '\n' || c != EOF) {
+                    //DEBUG;
+					buffer_append(strbuf, c); // Delete this to stop saving comment text.
+					c=fr_getc(input);
+				}
+				buffer_print(strbuf);
+				fr_ungetc(c, input); // return the last char
+				add_token(tokens, make_token(TCOMMENT, buffer_get(strbuf)));
+				return;
+			}
+			if (p == '*') {
+				c=fr_getc(input);
+				while (1) {
+					if (c == '*' && peek(input) == '/') {
+						break;
+					}
+					if (c == EOF) {
+						warning("multiline comment was never closed");
+						break;
+					}
+					buffer_append(strbuf, c);
+					c=fr_getc(input);
+				}
+				fr_getc(input); // eat the leading '/'
+				add_token(tokens, make_token(TCOMMENT, buffer_get(strbuf)));
+				return;
+			}
+            if (p == '=') {
+                    fr_getc(input);
+                    buffer_append(strbuf, '=');
+            }
+			add_token(tokens, make_token(TSYMBOL, buffer_get(strbuf)));
+			return;
+        case '=':
+        case '*':
+        case '!':
+        case '^':
+        case '%':
+        case '>': // shift right
+        case '<': // shift left
+            // 'c'=
+            if (p == '=') {
+                    fr_getc(input);
+                    buffer_append(strbuf, '=');
+            }
+            add_token(tokens, make_token(TSYMBOL, buffer_get(strbuf)));
+            return;
+        case '+':
+        case '-': // Arrow
+        case '&': // Address operator
+        case '|':
+            // 'c'= OR ++, --, &&, ||
+            if (p == '=') {
+                fr_getc(input);
+                buffer_append(strbuf, '=');
+            }
+            else if (p == c) {
+                fr_getc(input);
+                buffer_append(strbuf, p);
+            }
+            add_token(tokens, make_token(TSYMBOL, buffer_get(strbuf)));
+            return;
+
+        case '0'...'9':
+            // C recognizes a number starting with 0 as a base-8 number.
+            // An identifier cannot start with a number.
+            c = fr_getc(input);
+            // There needs to be multiple loops for different bases. 16=(0x[0-9,a-f]+)
+            while (c == '.' || (c >= '0' && c <= '9')) {
+                // C also recognizes the character 'e', but it must follow a decimal and mantissa digits.
+                // There needs to be a limit of one decimal point aswell, so this segment of code needs a lot more logic.
+                // Also, add support for <number>L, <number>f, and <number>u
+                buffer_append(strbuf, c);
+                c = fr_getc(input);
+            }
+            fr_ungetc(c, input); // Replace whatever value we took from the buffer.
+            //buffer_print(strbuf);
+            add_token(tokens, make_token(TNUMBER, buffer_get(strbuf)));
+            return;
+    }
+    c = fr_getc(input);
+    while (valid_word_char(c)) {
+        buffer_append(strbuf, c);
+        c = fr_getc(input);
+    }
+    fr_ungetc(c, input);
+    //buffer_print(strbuf);
+    add_token(tokens, make_token(is_keyword(buffer_get(strbuf)) ? TKEYWORD : TIDENT, buffer_get(strbuf)));
+}
+
+int valid_word_char(char c) {
+    // [_a-zA-Z0-9]
+    if(c == '_' || (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c >= 'Z'))
+        return 1;
+    return 0;
+}
+
+int is_keyword(char *word) {
+    return 0;
+}
+
+
+void tokenarray_print(TokenArray *t) {
+    // Bugfix 9/14/2017: Value wasn't properly printing because the pointer was to the deleted procedure 'buffer_get' instead
+    //                   to the heap.
+    for (int i=t->size-1; i >= 0; i--) {
+        Token *t2 = t->list[i];
+        char *t2value = t2->value;
+        printf("(%d: %d, '%s')\n", i, t->list[i]->type, t->list[i]->value);
+    }
+}
+
+

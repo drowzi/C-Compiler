@@ -1,0 +1,100 @@
+Log what you do everyday in this file
+
+12/26/2017
+- Replaced built in types with types from ad-lib to improve readability
+- Added a very simple type system and a type parser <storage?><const?><type/ident><pointer><ident>
+- Built a very simple parser for assignments and functions
+
+12/27/2017
+- Fixed some small bugs from yesterday
+- Added function skeletons for top-level parsing functions
+- Deleted the operator precedence parser
+
+12/28/2017
+- Implemented basic operator precedence parser, still needs unary/right associative/casting support
+- Implemented function declarations with parameters, block support, and type size tracking
+- Fixed a lot of bugs revolving around how the program controls the tokenvector position, may need changed
+
+12/29/2017
+- Wrote the debugging interface for AST nodes and types
+- Added the function declaration unit for the code generator and made it easily readable & inline
+- Added basic constant folding for when two constants are joined together with an operator in make_expr_node
+
+12/30/2017
+- Added some form of return support
+- Added naked identifier support
+
+12/31/2017
+- Added an error on using register/auto when defining a global variable
+- Changed top level declaration symbol save point to globalenv
+
+1/1/2018 - 1/11/2018
+- Around this time I was stuck on finding an algorithm to parse ANSI C declarations, its a very hard task for a naive programmer
+
+1/12/2018
+- Added a simple parser for function pointers
+- Studied assembly and corrected minor mistakes in code generation (had function parameters being placed in the wrong offsets)
+
+1/13/2018
+- Modularized the symbol table and type checking functions
+- Learned something important today... CodeBlocks doesn't let you fully debug a program if you don't have it set to a 'Debug' build. I guess it makes sense in hindsight
+
+1/15/2018
+- Restored the compiler back to a working state
+- Refactored some of the top level functions so they're abstracted better
+
+1/16/2018
+- Cleaned up parser and code gen
+- Added support for multiple modules
+- Gave module its own class
+- Completed op2s
+- Added parser if statement support
+- Added an emit function for emitting module dependencies
+- Added an implicit printf definition and functions to print each register
+
+1/18/2018
+- Created module.c and the setters that come with it
+
+1/19/2018
+- Created operator.c and defined a table for quick lookups for op associativity and arity
+- Cleaned up make_expr_node, it's now much easier to follow which will allow for it to be much easier to improve
+- Added built in c-types so you can point at those structures instead of creating multiple different structures for the same type
+- Fixed a bug which caused identifier nodes created by copying other identifier nodes to have a positive offset, and removed that system altogether
+
+1/20/2018
+- Added label support, soon break and continue statements will work
+- Wrote a bunch of emit macros for the backend, bloated the low level gen file by adding in multiple constant chars, needs to be fixed
+- Added support for function declarations (one at most, any more will trigger an error)
+
+1/21/2018
+- Studied LCC all day
+
+1/22/2018 - 1/23/2018
+- Studied OpenMP so I can implement a threaded front end in the near future
+
+1/24/2018
+- Created all possible node types in an attempt to finalize them to help with unit test lifespan
+
+1/25/2018
+- Refactored entire code base to support the new node types
+- Added syntax and nodes to support a builtin call, "__printident(lvar)", which prints an integer at lvar's offset
+- Fixed a bug in gen_expr: binary operations were performed r->l instead of l->r
+- Merged the two block parsing functions into one, with a flag to set the right state
+- Added support for ++ and --
+- Added variable declarations and declaration lists
+
+1/26/2017
+- Added strict tail checking to expression parsing
+- Hid a lot of logic at the top level of the parser in lower level calls
+- Added a wrapper for malloc/free to track memory usage
+
+1/27/2017
+- Removed n conditionals from the program where n is the number of characters in a file by setting a function pointer for the take/peek function
+
+2/4/2017
+- Added syntax checks for preprocessor directives
+- Added recognition for scientific notation
+- Started experimenting with a new token structure and a function pointer table for the scanner
+
+2/6/2017
+- Added include support
